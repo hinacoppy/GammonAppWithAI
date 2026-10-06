@@ -62,46 +62,61 @@
   </section>
 
   <aside id="settings" class="settings" style="display: none;">
-   <h2>### Backgammon vs AI App Settings ###</h2>
+   <div class="settingtitle">### Backgammon vs AI Settings ###</div>
+   <table>
+    <tr>
+     <td>Match length:</td>
+     <td>
+      <select id="matchlen" name="matchlen">
+       <option value="0" selected>$</option>
+       <option value="1">1</option>
+       <option value="2">2</option>
+       <option value="3">3</option>
+       <option value="5">5</option>
+       <option value="7">7</option>
+      </select>
+      <span class="small">($ = Unlimited)</span>
+     </td>
+    </tr>
+    <tr>
+     <td>Show pip:</td>
+     <td>
+      <label class="switch"><input type="checkbox" id="showpip" name="showpip" checked /> <span class="slider"></span></label>
+     </td>
+    </tr>
+    <tr>
+     <td>Flash movable pt: &ensp;</td>
+     <td>
+      <label class="switch"><input type="checkbox" id="flashdest" name="flashdest" checked /> <span class="slider"></span></label>
+     </td>
+    </tr>
+    <tr>
+     <td>Jacoby rule:</td>
+     <td>
+      <label class="switch"><input type="checkbox" id="jacoby" name="jacoby" checked /> <span class="slider"></span></label>
+      <span class="small">(unlimited only)</span>
+     </td>
+    </tr>
+    <tr>
+     <td>AI engine:</td>
+     <td>
+      <span class="segmented">
+       <label><input type="radio" name="aiengine" value="wildbg" checked /><span class="seglabel">Wildbg</span></label>
+       <label><input type="radio" name="aiengine" value="gammonnet" /><span class="seglabel">gammonNet</span></label>
+      </span>
+      <span class="small">(applies from New Game)</span>
+     </td>
+    </tr>
+   </table>
+
    <p>
-    Match length:
-    <select id="matchlen" name="matchlen">
-     <option value="0" selected>$</option>
-     <option value="1">1</option>
-     <option value="2">2</option>
-     <option value="3">3</option>
-     <option value="5">5</option>
-     <option value="7">7</option>
-    </select>
-    ($ = Unlimited)
-   </p>
-   <p>
-    <input type="checkbox" id="showpip" name="showpip" class="switch" checked />
-    <label for="showpip" class="togglelabel">Show pip</label>
-    &emsp;&emsp;
-    <input type="checkbox" id="jacoby" name="jacoby" class="switch" value="jacoby" checked />
-    <label for="jacoby" class="togglelabel">Jacoby Rule <span style="font-size: smaller;">(unlimited only)</span></label>
-   </p>
-   <p>
-    AI engine:
-    <select id="aiengine" name="aiengine">
-     <option value="wildbg" selected>wildbg</option>
-     <option value="gammonnet">gammonNet</option>
-    </select>
-    <span style="font-size: smaller;">(applies from New Game)</span>
-   </p>
-   <p>
-    <input type="checkbox" id="flashdest" name="flashdest" class="switch" checked />
-    <label for="flashdest" class="togglelabel">Flash movable Pt</label>
-   </p>
-   <p>
-    <button id="resignbtn" class="oparationbtn"><i class="fas fa-flag" style="color: white;"></i> Resign</button>&emsp;
-    <button id="newgamebtn" class="oparationbtn"><i class="fas fa-check"></i> New Game</button>&emsp;
-    <button id="cancelbtn" class="oparationbtn"><i class="fas fa-times"></i> Cancel</button>&emsp;
+    <button id="resignbtn" class="oparationbtn"><i class="fas fa-flag" style="color: white;"></i> Resign</button>&ensp;
+    <button id="newgamebtn" class="oparationbtn"><i class="fas fa-check"></i> New Game</button>&ensp;
+    <button id="cancelbtn" class="oparationbtn"><i class="fas fa-times"></i> Cancel</button>&ensp;
     <a id="downloadkifu" href="" download="kifu.txt">
      <button id="downloadkifubtn" class="oparationbtn"><i class="fas fa-download"></i> Kifu</button>
     </a>
-    &emsp;
+    &ensp;
     <a href="help.html" target="help">
      <button id="helpbtn" class="oparationbtn"><i class="fas fa-question"></i> Help</button>
     </a>

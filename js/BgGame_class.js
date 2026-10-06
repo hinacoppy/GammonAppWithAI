@@ -34,7 +34,7 @@ class BgGame {
     this.kifuobj = new BgKifu(this, true);
     this.aiEngine = this.loadAiEngine(); //'wildbg' | 'gammonnet'
     this.ai = this.createAi(this.aiEngine);
-    document.getElementById("aiengine").value = this.aiEngine;
+    this.setAiEngineRadio(this.aiEngine);
 
     this.setDomNames();
     this.setEventHandler();
@@ -54,6 +54,14 @@ class BgGame {
     } catch (e) {
       return "wildbg"; //localStorageが使えない場合は既定のエンジン
     }
+  }
+
+  getAiEngineRadio() {
+    return document.querySelector("[name=aiengine]:checked").value;
+  }
+
+  setAiEngineRadio(engine) {
+    document.querySelector(`[name=aiengine][value=${engine}]`).checked = true;
   }
 
   createAi(engine) {
@@ -78,7 +86,7 @@ class BgGame {
 
   //設定画面で選んだAIエンジンに切り替える(新しいゲーム開始時に呼ぶ)
   switchAiEngine() {
-    const engine = document.getElementById("aiengine").value;
+    const engine = this.getAiEngineRadio();
     if (engine === this.aiEngine) { return; }
     this.ai.worker.terminate();
     this.aiEngine = engine;
@@ -976,7 +984,7 @@ class BgGame {
     this.settingVars.showpip     = document.getElementById("showpip").checked;
     this.settingVars.flashdest   = document.getElementById("flashdest").checked;
     this.settingVars.jacoby      = document.getElementById("jacoby").checked;
-    this.settingVars.aiengine    = document.getElementById("aiengine").value;
+    this.settingVars.aiengine    = this.getAiEngineRadio();
   }
 
   loadSettingVars() {
@@ -985,7 +993,7 @@ class BgGame {
     document.getElementById("showpip").checked     = this.settingVars.showpip;
     document.getElementById("flashdest").checked   = this.settingVars.flashdest;
     document.getElementById("jacoby").checked      = this.settingVars.jacoby;
-    document.getElementById("aiengine").value      = this.settingVars.aiengine;
+    this.setAiEngineRadio(this.settingVars.aiengine);
   }
 
   redrawAction() {
