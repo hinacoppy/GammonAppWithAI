@@ -1,0 +1,13 @@
+{
+  "version": "v1.6.0",
+  "date": "2026-10-06",
+  "network": "strehl-prob5-512-512-256-256_v1.6.0_2026-10-06.bin",
+  "network_fp16": "strehl-prob5-512-512-256-256_v1.6.0_2026-10-06.bin16",
+  "prune": "strehl-prune-32_v1.6.0_2026-10-06.bin",
+  "prune_fp16": "strehl-prune-32_v1.6.0_2026-10-06.bin16",
+  "prune_k": 12,
+  "wasm": "gammonnet-simd.mjs",
+  "wasm_scalar": "gammonnet.mjs",
+  "api": "api/gammonnet.mjs",
+  "pool": "api/pool.mjs"
+}

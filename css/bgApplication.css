@@ -1,0 +1,230 @@
+/**
+  bgboardapp.css
+  designed by hinacoppy 2019--2025
+*/
+
+/* document outline ----------------------------------------- */
+*{
+  user-select:none; /* タップ、ドラッグで文字選択しないように */
+}
+html{
+  height:100vmin;
+  overflow:hidden;
+  overscroll-behavior:none; /* バウンススクロールを抑止 */
+}
+body{
+  margin:0;
+  padding:0;
+  max-height:100vmin;
+  min-height:100vmin;
+  height:100vmin;
+  font-family:'Arial', 'Meiryo UI';
+}
+select{
+  font-size:100%;
+}
+
+@media screen and (orientation:portrait) {
+.container{ /* 縦画面の時は横向きに表示し、横画面にするよう促す */
+  width:100vh;
+  height:100vw;
+  margin:-100vw 0 100vh;
+  transform:rotate(90deg);
+  transform-origin:left bottom;
+}}
+
+/* App definition ----------------------------------------------- */
+.turn1{
+  transform:rotateZ(0deg);
+}
+.turn2{
+  /*transform:rotateZ(180deg);*/
+}
+#nav{
+  position:absolute;
+  top:35vmin;
+  left:86vmax;
+}
+.nav{
+  width:30vmin;
+  height:30vmin;
+  transform:rotateZ(-90deg);
+  text-align:center;
+}
+#player1{
+  position:absolute;
+  top:70vmin;
+  left:86vmax;
+}
+#player2{
+  position:absolute;
+  top:0vmin;
+  left:86vmax;
+}
+.playerinfo__nouse{
+  transform:rotateZ(-90deg);
+  width:30vmin;
+  height:30vmin;
+  text-align:center;
+}
+.score{
+  display:block;
+  background-color:#877;
+  color:white;
+  width:24vmin;
+  height:6vmax;
+  line-height:6vmax;
+  text-align:center;
+  font-size:5vmax;
+  margin:0 auto;
+}
+.pip{
+  display:block;
+  background-color:#4aa;
+  color:white;
+  width:18vmin;
+  height:4vmax;
+  line-height:4vmax;
+  text-align:center;
+  font-size:3vmax;
+  margin:0 auto;
+}
+.panel{
+  position:absolute;
+  z-index:50;
+/*  display:none;*/
+}
+.aistatus{
+  background-color:#dff;
+  color:#27f;
+  border:3px solid #27f;
+  border-radius:3vmin;
+  padding:2vmin 2vmax;
+  font-size:2vmax;
+  white-space:nowrap;
+}
+.clock{
+  display:none;
+  background-color:#a4a;
+  color:white;
+  width:18vmin;
+  height:4vmax;
+  line-height:4vmax;
+  text-align:center;
+  font-size:3vmax;
+  margin:0 auto;
+}
+
+.delay{
+  display:none;
+  background-color: rgba( 160, 160, 64, 0.85 );
+  color:white;
+  width:9vmin;
+  height:3vmax;
+  line-height:3vmax;
+  text-align:center;
+  font-size:2vmax;
+  margin:0 auto;
+  transform:translateY(-3.5vmax)
+}
+.timeupLose{
+  background-color:yellow;
+  color:red;
+}
+#pausepanel{
+  background-color: rgba( 128, 128, 128, 0.60 );
+  color:cyan;
+  width:65vmax;
+  height:80vmin;
+  text-align:center;
+}
+
+/* oparation button decorations ------------------------------------- */
+.oparationbtn{
+  --bg-color:#bef;
+  --fg-color:#27f;
+  color:var(--fg-color);
+  border:3px solid var(--fg-color);
+  background-color:var(--bg-color);
+  border-radius:5vmin;
+  padding:2vmin 2vmax;
+  font-size:2vmax;
+  white-space:nowrap;
+}
+.oparationbtn:disabled {
+  --bg-color:#bbb;
+  --fg-color:#555;
+  color:var(--fg-color);
+  border-color:var(--fg-color);
+  background-color:var(--bg-color);
+}
+
+/* settingwindow decorations ------------------------------------- */
+.settings{
+  position:absolute;
+  display:none;
+  z-index:99;
+  background-color:#dff;
+  border:3px solid #00f;
+  padding:2vmin 4vmax;
+  font-size:1.8vmax;
+}
+.popuptitle{
+  font-size:2.2vmax;
+  color:#fff;
+  background-color:#46f;
+  padding:2vmin 2vmax;
+  margin-bottom:2vmin;
+}
+
+/* toggle switch ----------------------------------------- */
+input {
+  display:none;
+}
+.togglelabel {
+  display:inline-block;
+  width:22vmax;
+  height:4vmin;
+  position:relative;
+  padding:1vmin 0vmax 1vmin 4vmax;
+  border:3px solid #fff;
+  border-radius:3vmax;
+  color:#fff;
+  background-color:#999;
+  white-space:nowrap;
+  transition:background-color .2s, box-shadow .2s;
+}
+.togglelabel::before {
+  content:'';
+  display:block;
+  position:absolute;
+  top:1vmin;
+  left:1vmin;
+  width:3vmin;
+  height:3vmin;
+  border:2px solid #fff;
+  border-radius:5vmin;
+  transition:background-color .2s;
+}
+.switch:checked + label {
+  background-color:#29f;
+}
+.switch:checked + label::before {
+  background-color:#fff;
+}
+
+/* バー・オフトレイ・ポイント三角形(盤面の固定部品)を描画するsvg。.board(#board)の内側を覆う */
+.boardBase{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+}
+
+/* BgKfInputBoardはgetComputedStyle(document.documentElement)から盤面寸法を読むため、:rootにも定義する(normalgammon) */
+:root{
+  --boardWidthNum: 84.3;
+  --pointWidthNum: 6;
+  --cubeSizeNum: 5.5;
+}

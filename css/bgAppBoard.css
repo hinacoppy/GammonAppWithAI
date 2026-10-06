@@ -1,0 +1,215 @@
+/* bgAppBoard.css -------------------------------------------- */
+/* Designed by hinacoppy 2019 - 2025 ------------------------- */
+
+/* Constant definision --------------------------------------- */
+:root{
+  --boardHeightNum: 100;
+  --frameSizeNum: 0;
+  --offtrayMarginNum: 5;
+  --offtrayHeightNum: 49; /* bgBoardApp=49, other=boardHeightNum */
+  --cubeFontSizeNum: 4;
+  --labelFontSizeNum: 0.7;
+  --stackFontSizeNum: 3.0;
+}
+.container{
+  --point-width:calc(var(--pointWidthNum) * 1vmax);
+  --board-height-max:calc(var(--boardHeightNum) * 1vmin);
+  --board-height:calc(var(--boardHeightNum) * 1vmin);
+  --board-width:calc(var(--boardWidthNum) * 1vmax);
+  --board-frame-size:calc(var(--frameSizeNum) * 1vmax);
+  --point-height:calc(var(--boardHeightNum) * 1vmin / 2.3);
+  --cube-size:calc(var(--cubeSizeNum) * 1vmax);
+  --cube-font-size:calc(var(--cubeFontSizeNum) * 1vmax);
+  --label-font-size:calc(var(--labelFontSizeNum) * 1vmax);
+  --stack-font-size:calc(var(--stackFontSizeNum) * 1vmax);
+  --offtray-margin:calc(var(--offtrayMarginNum) * 1px);
+  --offtray-height:calc(var(--offtrayHeightNum) * 1vmin);
+}
+
+/* bgboard decoration ---------------------------------------- */
+.board{
+  position:relative;
+  width:var(--board-width);
+  height:var(--board-height);
+  max-height:var(--board-height-max);
+  border:var(--board-frame-size) solid var(--board-frame);
+  background-color:var(--board-color);
+}
+.bar{
+  position:absolute;
+  width:var(--point-width);
+  height:var(--board-height);
+  max-height:var(--board-height-max);
+  background-color:var(--board-frame);
+}
+.offtray{
+  position:absolute;
+  width:var(--point-width);
+  height:var(--offtray-height);
+  max-height:var(--board-height-max);
+  background-color:var(--offtray-color);
+}
+#offtray1{
+  border-right:var(--offtray-margin) solid var(--board-frame);
+}
+#offtray2{
+  border-left:var(--offtray-margin) solid var(--board-frame);
+}
+.cube{
+  position:absolute;
+  border-radius:5px; /* 角丸表示 */
+  border:1px solid gray;
+  text-align:center;
+  font-weight:bold;
+  font-size:var(--cube-font-size);
+  width:var(--cube-size);
+  height:var(--cube-size);
+  line-height:var(--cube-size);
+  color:var(--cube-text);
+  background-color:var(--cube-base);
+}
+.cubeoffer{
+  color:var(--cube-offer-fg);
+  background-color:var(--cube-offer-bg);
+}
+.dice{
+  position:absolute;
+  font-size:var(--point-width);
+  z-index:40;
+}
+.label{
+  position:absolute;
+  color:var(--label-color);
+  text-align:center;
+  font-size:var(--label-font-size);
+  line-height:var(--board-frame-size);
+  width:var(--point-width);
+  z-index:5;
+}
+.stack{
+  position:absolute;
+  text-align:center;
+  font-weight:bold;
+  font-size:var(--stack-font-size);
+  line-height:var(--point-width);
+  width:var(--point-width);
+  z-index:30;
+  pointer-events:none; /* through drag event into chequer below */
+}
+.chequer{
+  position:absolute;
+  width:var(--point-width);
+  height:var(--point-width);
+  clip-path:circle(48% at 50% 50%); /* 影の分、小さくする */
+}
+.border{ /* drop-shadowの影は一つ上のエレメントに掛ける */
+  filter:drop-shadow( 0.5px  0.5px gray)
+         drop-shadow(-0.5px  0.5px gray)
+         drop-shadow( 0.5px -0.5px gray)
+         drop-shadow(-0.5px -0.5px gray);
+}
+.dragging{
+  z-index:999; /* DOMのstyle内に定義されているため、この設定は無視される */
+  opacity:0.7;
+}
+
+/* Point Triangles ------------------------------------- */
+.point{
+  position:absolute;
+  width:var(--point-width);
+  height:var(--point-height);
+  max-height:calc(var(--board-height-max) * 0.48);
+}
+.flash{
+  opacity:0.4;
+}
+.pt_dnod{
+  clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color:var(--triangle-odd);
+}
+.pt_dnev{
+  clip-path:polygon(50% 0%, 0% 100%, 100% 100%);
+  background-color:var(--triangle-evn);
+}
+.pt_upod{
+  clip-path:polygon(0% 0%, 100% 0%, 50% 100%);
+  background-color:var(--triangle-odd);
+}
+.pt_upev{
+  clip-path:polygon(0% 0%, 100% 0%, 50% 100%);
+  background-color:var(--triangle-evn);
+}
+
+/* Board Object settings ------------------------------------- */
+.cubepos0{
+  transform:rotateZ(-90deg);
+}
+.cubepos1{
+  transform:rotateZ(0deg);
+}
+.cubepos2{
+  transform:rotateZ(180deg);
+}
+.bearoff{
+  clip-path:ellipse(50% 15% at 50% 50%);
+}
+.turncol1{
+  background-color:var(--chequer1);
+}
+.turncol2{
+  background-color:var(--chequer2);
+}
+.diceface1{
+  width:var(--point-width);
+  height:var(--point-width);
+  stroke:var(--dicepip1);
+  fill:var(--diceface1);
+}
+.diceface2{
+  width:var(--point-width);
+  height:var(--point-width);
+  stroke:var(--dicepip2);
+  fill:var(--diceface2);
+}
+.dicepip1{
+  color:var(--dicepip1);
+}
+.dicepip2{
+  color:var(--dicepip2);
+}
+.stackcol1{
+  color:var(--stack1);
+  transform:rotateZ(0deg);
+}
+.stackcol2{
+  color:var(--stack2);
+  transform:rotateZ(180deg);
+}
+
+/* Board Style Configuration -------------------------------------*/
+.vsAIgammon{
+  /* App depend constants */
+  --boardWidthNum: 84.3;
+  --pointWidthNum: 6;
+  --cubeSizeNum: 5.5;
+  /* GPS/GMA color */
+  --board-color:#fbeeda;
+  --board-frame:#8d5a32;
+  --triangle-odd:#a3a3a3;
+  --triangle-evn:#dab484;
+  --offtray-color:#c1a276;
+  --bar-color:#8d5a32;
+  --label-color:#ffffff;
+  --cube-base:#d6d6d6;
+  --cube-text:#000000;
+  --cube-offer-bg:#a6a6f6;
+  --cube-offer-fg:#0000ff;
+  --stack1:#ffffff;
+  --stack2:#000000;
+  --chequer1:#1a1b1b;
+  --chequer2:#fdfdf0;
+  --diceface1:#1a1b1b;
+  --diceface2:#fdfdf0;
+  --dicepip1:#ffffff;
+  --dicepip2:#000000;
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="BackGammon" />
+  <meta name="author" content="(C)hinacoppy 2026" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/bgApplication.css" />
+  <link rel="stylesheet" href="css/bgAppBoard.css" />
+  <link rel="stylesheet" href="/css/font-awesome-animation.min.css" />
+  <link rel="icon" href="icon/favicon.ico" />
+  <link rel="apple-touch-icon" href="icon/apple-touch-icon.png" />
+  <title>BackGammon vs AI</title>
+</head>
+<body>
+ <article class="container vsAIgammon">
+  <section id="board" class="board"></section>
+
+  <nav id="player1" class="nav">
+   <div id="score1" class="score">0</div>
+   <div id="pip1" class="pip">0</div>
+  </nav>
+  <nav id="player2" class="nav">
+   <div id="score2" class="score">0</div>
+   <div id="pip2" class="pip">0</div>
+  </nav>
+  <nav id="nav" class="nav">
+   <div id="matchinfo" class="score">$</div>
+   <button id="settingbtn" class="oparationbtn"><i class="fas fa-bars"></i> Settings</button>
+  </nav>
+
+  <section id="panelholder" style="display: none;">
+   <div id="rolldouble" class="panel">
+    <button id="doublebtn" class="oparationbtn"><i class="fas fa-dice-d6"></i> Double</button> &emsp;&emsp;&emsp;
+    <button id="rollbtn" class="oparationbtn"><i class="fas fa-dice"></i> Roll</button>
+    <button id="passbtn" class="oparationbtn"><i class="fas fa-ban"></i> Pass</button>
+   </div>
+
+   <div id="takedrop" class="panel">
+     <button id="dropbtn" class="oparationbtn"><i class="fas fa-thumbs-down"></i> Pass</button> &emsp;&emsp;&emsp;
+     <button id="takebtn" class="oparationbtn"><i class="fas fa-thumbs-up"></i> Take</button>
+   </div>
+
+   <div id="doneundo" class="panel">
+    <button id="undobtn" class="oparationbtn"><i class="fas fa-undo"></i> Undo</button> &nbsp;
+    <button id="forcedbtn" class="oparationbtn"><i class="fas fa-dragon"></i> Forced</button> &nbsp;
+    <button id="donebtn" class="oparationbtn"><i class="fas fa-check-circle"></i> Done</button>
+   </div>
+   <div id="aistatus" class="panel aistatus" style="display: none;"></div>
+   <button id="openingroll" class="oparationbtn panel"><i class="fas fa-dice"></i> Opening Roll</button>
+
+   <div id="gameend" class="panel settings">
+    <p class="mes1">You WIN and the MATCH</p>
+    <p class="mes2">Get 4pt (GAMMON)</p>
+    <p class="mes3">7 - 5 (9pt)</p>
+    <button id="gameendnextbtn" class="oparationbtn"><i class="fas fa-arrow-alt-circle-right"></i> Next</button>
+    <button id="gameendokbtn" class="oparationbtn"><i class="fas fa-check-circle"></i> OK</button>
+   </div>
+  </section>
+
+  <aside id="settings" class="settings" style="display: none;">
+   <h2>### Backgammon vs AI App Settings ###</h2>
+   <p>
+    Match length:
+    <select id="matchlen" name="matchlen">
+     <option value="0" selected>$</option>
+     <option value="1">1</option>
+     <option value="2">2</option>
+     <option value="3">3</option>
+     <option value="5">5</option>
+     <option value="7">7</option>
+    </select>
+    ($ = Unlimited)
+   </p>
+   <p>
+    <input type="checkbox" id="showpip" name="showpip" class="switch" checked />
+    <label for="showpip" class="togglelabel">Show pip</label>
+    &emsp;&emsp;
+    <input type="checkbox" id="jacoby" name="jacoby" class="switch" value="jacoby" checked />
+    <label for="jacoby" class="togglelabel">Jacoby Rule <span style="font-size: smaller;">(unlimited only)</span></label>
+   </p>
+   <p>
+    AI engine:
+    <select id="aiengine" name="aiengine">
+     <option value="wildbg" selected>wildbg</option>
+     <option value="gammonnet">gammonNet</option>
+    </select>
+    <span style="font-size: smaller;">(applies from New Game)</span>
+   </p>
+   <p>
+    <input type="checkbox" id="flashdest" name="flashdest" class="switch" checked />
+    <label for="flashdest" class="togglelabel">Flash movable Pt</label>
+   </p>
+   <p>
+    <button id="resignbtn" class="oparationbtn"><i class="fas fa-flag" style="color: white;"></i> Resign</button>&emsp;
+    <button id="newgamebtn" class="oparationbtn"><i class="fas fa-check"></i> New Game</button>&emsp;
+    <button id="cancelbtn" class="oparationbtn"><i class="fas fa-times"></i> Cancel</button>&emsp;
+    <a id="downloadkifu" href="" download="kifu.txt">
+     <button id="downloadkifubtn" class="oparationbtn"><i class="fas fa-download"></i> Kifu</button>
+    </a>
+    &emsp;
+    <a href="help.html" target="help">
+     <button id="helpbtn" class="oparationbtn"><i class="fas fa-question"></i> Help</button>
+    </a>
+   </p>
+   <div id="kifuxgid" style="display: none;"></div>
+  </aside>
+ </article>
+
+<script src="/js/fontawesome-inuse.min.js" defer></script>
+<script src="/js/BgUtil_class.js"></script>
+<script src="/js/BgXgid_class.js"></script>
+<script src="js/BgDomUtil_class.js"></script>
+<script src="js/BgSvgChequer_class.js"></script>
+<script src="js/BgAppBoard_class.js"></script>
+<script src="js/BgAiWildbg_class.js"></script>
+<script src="js/BgAiGammonNet_class.js"></script>
+<script src="js/BgKifu_class.js"></script>
+<script src="js/BgGame_class.js"></script>
+<script>
+  const bgGame = new BgGame("normal");
+</script>
+<script src="/js/start-serviceWorker.js"></script>
+</body>
+</html>
