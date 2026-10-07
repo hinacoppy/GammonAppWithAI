@@ -17,8 +17,42 @@ function loadEngine() {
   return enginePromise;
 }
 
+// XGIDの位置文字列から、手番側の各ポイントの駒数を数える(手番側視点: index 1..24=ポイント, 25=バー)
+function ownCounts(xgidstr) {
+  const s = xgidstr.split(':');
+  const pos = s[0].slice('XGID='.length);
+  const turn = Number(s[3]);
+  const own = new Array(26).fill(0);
+  for (let i = 0; i < 26; i++) {
+    const ch = pos[i];
+    if (ch === '-') { continue; }
+    const isUpper = ch === ch.toUpperCase();
+    if (isUpper !== (turn === 1)) { continue; } //相手の駒
+    own[turn === 1 ? i : 25 - i] = ch.charCodeAt(0) & 31;
+  }
+  return own;
+}
+
+// 着手表記は実行順ではない("2/off(3) 4/2" は4/2の後でないと3つ目の2/offが成立しない)。
+// 駒数 own を使い、表記順を優先しつつ、その時点で実行できる手から順に並べ替える。
+function orderMoves(moves, own) {
+  const cnt = own.slice();
+  const rest = moves.slice();
+  const out = [];
+  while (rest.length) {
+    let i = rest.findIndex((m) => cnt[m.from] > 0);
+    if (i < 0) { i = 0; } //解決できなければ表記順のまま(呼び出し側で不正手として扱われる)
+    const [m] = rest.splice(i, 1);
+    cnt[m.from]--;
+    if (m.to > 0) { cnt[m.to]++; }
+    out.push(m);
+  }
+  return out;
+}
+
 // 着手表記(手番側視点) "bar/20 8/5* 6/2(2) 13/7/5" -> [{from,to},...] (25=バー, 0=オフ)
-export function parseNotation(notation) {
+// own(各ポイントの駒数)を渡すと、実行可能な順に並べ替えて返す
+export function parseNotation(notation, own) {
   const pt = (s) => (s === 'bar' ? 25 : s === 'off' ? 0 : Number(s));
   const moves = [];
   for (const tok of notation.trim().split(/\s+/).filter(Boolean)) {
@@ -30,7 +64,7 @@ export function parseNotation(notation) {
       for (let i = 0; i + 1 < pts.length; i++) { moves.push({ from: pts[i], to: pts[i + 1] }); }
     }
   }
-  return moves;
+  return own ? orderMoves(moves, own) : moves;
 }
 
 // XGIDから policy() に渡す共通引数を組み立てる。キューブ所有は手番側から見た 0=センター/1=自分/2=相手
@@ -74,7 +108,7 @@ self.addEventListener('message', (event) => {
         case 'move': { // args: [xgid, opts]  -> {moves:[{from,to}], notation, equity}
           const { board, ctx } = policyContext(ev, args[0], args[1] || {});
           const r = ev.policy(board, { pending: 'move', ...ctx });
-          value = { moves: r.play ? parseNotation(r.play.notation) : [], notation: r.play ? r.play.notation : '', equity: r.equityA };
+          value = { moves: r.play ? parseNotation(r.play.notation, ownCounts(args[0])) : [], notation: r.play ? r.play.notation : '', equity: r.equityA };
           break;
         }
         case 'cube': { // args: [xgid, opts]  -> {shouldDouble}
