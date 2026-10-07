@@ -25,24 +25,22 @@ class BgGame {
     this.crawford = false;
     this.xgid = new Xgid(null, this.gametype);
     this.board = new BgBoard("#board"); //ベアオフは右側固定
+    this.kifuobj = new BgKifu(this, true);
     this.undoStack = [];
     this.animDelay = 800;
     this.aiMoveDelay = 500; //AIが駒を1つ動かすアニメーションの時間(ms)
     this.gameFinished = true;
     this.settingVars = {}; //設定内容を保持するオブジェクト
-
-    this.kifuobj = new BgKifu(this, true);
-    this.aiEngine = this.loadAiEngine(); //'wildbg' | 'gammonnet'
-    this.ai = this.createAi(this.aiEngine);
-    this.setAiEngineRadio(this.aiEngine);
+    this.outerDragFlag = false; //駒でない部分をタップしてドラッグを始めたら true
 
     this.setDomNames();
     this.setEventHandler();
     this.setChequerDraggable();
-    this.showpipflg = true;
-    this.flashflg = true;
-    this.jacobyflg = true;
-    this.outerDragFlag = false; //駒でない部分をタップしてドラッグを始めたら true
+
+    this.aiEngine = this.loadAiEngine(); //'wildbg' | 'gammonnet' | 'gnubg'
+    this.ai = this.createAi(this.aiEngine);
+    this.setAiEngineRadio(this.aiEngine);
+
     this.initGameOption();
     this.beginNewGame(true); //スコアをリセットして新規ゲームを始める
     this.watchAiReady();
@@ -50,7 +48,8 @@ class BgGame {
 
   loadAiEngine() {
     try {
-      return (localStorage.getItem("aiEngine") === "gammonnet") ? "gammonnet" : "wildbg";
+      const e = localStorage.getItem("aiEngine");
+      return (e === "gammonnet" || e === "gnubg") ? e : "wildbg";
     } catch (e) {
       return "wildbg"; //localStorageが使えない場合は既定のエンジン
     }
@@ -65,8 +64,23 @@ class BgGame {
   }
 
   createAi(engine) {
-    return (engine === "gammonnet") ? new BgAiGammonNet('wasm/gammonnet/gammonnet_worker.js', { jacoby: this.jacobyflg })
-                                    : new BgAiWildbg('wasm/wildbg/wildbg_worker.js');
+    //AIの思考レベル
+    // gammonnet: 'instant' | 'normal'(2-ply+枝刈り) | 'thorough'
+    // gnubg    : 'instant'(0-ply) | 'normal'(1-ply) | 'thorough'(2-ply)
+    // wildbg   : レベルなし
+
+    let settings;
+    switch(engine) {
+    case "gammonnet":
+      settings = { jacoby: this.jacobyflg, level: "normal" };
+      return new BgAiGammonNet('wasm/gammonnet/gammonnet_worker.js', settings);
+   case "gnubg":
+      settings = { jacoby: this.jacobyflg, level: "normal" };
+      return new BgAiGnubg('wasm/gnubg/gnubg_worker.js', settings);
+    case "wildbg":
+    default:
+      return new BgAiWildbg('wasm/wildbg/wildbg_worker.js');
+    }
   }
 
   watchAiReady() {
@@ -500,11 +514,10 @@ class BgGame {
     const mes2 = (humanwin ? "Get " : "AI gets ") + this.gamescore[0] * this.gamescore[1] + "pt (" + res + ")";
     this.gameend.querySelector(":scope > .mes2").textContent = mes2;
 
-    const p1 = BgUtil.cvtTurnGm2Bd(player);
-    const p2 = BgUtil.cvtTurnGm2Bd(!player);
-    const hs = this.score[BgUtil.cvtTurnGm2Bd(this.humanPlayer)]; //人間 - AI の順に表示する
-    const as = this.score[BgUtil.cvtTurnGm2Bd(this.aiPlayer)];
-    const mes3 = "You " + hs + " - " + as + " AI" + ((this.matchLength == 0) ? "" : "&emsp;(" +this.matchLength + "pt)");
+    const huscr = this.score[BgUtil.cvtTurnGm2Bd(this.humanPlayer)]; //人間 - AI の順に表示する
+    const aiscr = this.score[BgUtil.cvtTurnGm2Bd(this.aiPlayer)];
+    const matchinfo = (this.matchLength == 0) ? "" : "&emsp;(" +this.matchLength + "pt)";
+    const mes3 = "You " + huscr + " - " + aiscr + " " + this.aiEngine + matchinfo;
     this.gameend.querySelector(":scope > .mes3").innerHTML = mes3;
   }
 
@@ -565,7 +578,7 @@ class BgGame {
   // ---- AI(wildbg) ----
   showAiStatus(msg) {
     this.aistatus.textContent = msg;
-    this.showElement(this.aistatus, 'L', this.aiPlayer,  -12); //yoffsetを設定しダイスに重ねない
+    this.showElement(this.aistatus, 'L', this.aiPlayer,  12); //yoffsetを設定しダイスに重ねない
   }
 
   hideAiStatus() {

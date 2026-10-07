@@ -195,7 +195,7 @@ input:checked + .slider:before{
   float:left;
   padding:0em 0.5em;
   text-align:center;
-  width:12vmax;
+  width:20vmax;
   line-height:8vmin;
   background-color:var(--segmented-disable-bg);
   border-color:var(--segmented-frame);

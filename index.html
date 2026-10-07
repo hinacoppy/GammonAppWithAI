@@ -101,10 +101,21 @@
      <td>AI engine:</td>
      <td>
       <span class="segmented">
-       <label><input type="radio" name="aiengine" value="wildbg" checked /><span class="seglabel">Wildbg</span></label>
-       <label><input type="radio" name="aiengine" value="gammonnet" /><span class="seglabel">gammonNet</span></label>
+       <label><input type="radio" name="aiengine" value="wildbg" checked />
+              <span class="seglabel">Wildbg <span class="small">(PR: 18.5)</span></span></label>
+       <label><input type="radio" name="aiengine" value="gammonnet" />
+              <span class="seglabel">gammonNet <span class="small">(PR: 2.1)</span></span></label>
       </span>
-      <span class="small">(applies from New Game)</span>
+     </td>
+    </tr>
+    <tr>
+     <td></td>
+     <td>
+      <span class="segmented">
+       <label><input type="radio" name="aiengine" value="gnubg" />
+              <span class="seglabel">gnubg <span class="small">(PR: 1.8)</span></span></label>
+              &ensp; <span class="small">(applies from New Game)</span>
+      </span>
      </td>
     </tr>
    </table>
@@ -133,6 +144,7 @@
 <script src="js/BgAppBoard_class.js"></script>
 <script src="js/BgAiWildbg_class.js"></script>
 <script src="js/BgAiGammonNet_class.js"></script>
+<script src="js/BgAiGnubg_class.js"></script>
 <script src="js/BgKifu_class.js"></script>
 <script src="js/BgGame_class.js"></script>
 <script>

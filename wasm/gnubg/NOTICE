@@ -1,0 +1,11 @@
+gnubg.js / gnubg.wasm / gnubg.data は GNU Backgammon の WebAssembly ビルド (gnubg-web, Theodore Hwa 作)。
+ライセンス: GNU General Public License v3.0 (全文は同じフォルダの LICENSE)。
+本アプリ本体の他のファイルのライセンスとは別に、この3ファイルは GPL-3.0 で提供される。
+
+配布物の入手元: http://xenon.stanford.edu/~hwatheod/gnubg_web/  (取得日 2026-10-07、GNU Backgammon 1.05.000 Sep 1 2026)
+LICENSE の入手元: https://github.com/hwatheod/gnubg-web (COPYING。GPL-3.0 全文)
+
+ソースコード:
+  gnubg-web (WASMビルド用の改変を含む) : https://github.com/hwatheod/gnubg-web
+  GNU Backgammon 本体                  : https://www.gnu.org/software/gnubg/
+  本アプリ(エンジン呼び出し側 gnubg_worker.js 等を含む): https://github.com/hinacoppy/GammonAppWithAI
