@@ -422,18 +422,17 @@ class BgKifu {
     this.kifumat.push('; [Crawford "On"]');
     this.kifumat.push('; [CubeLimit "1024"]');
     this.kifumat.push('');
-    const matchlengthinfo = this.matchlen == 0 ? 'unlimited game' : this.matchlen + ' point match';
-    //★実際のunlimitedのMATファイルを確認すること★
+    const matchlengthinfo = this.matchlen + ' point match';
     this.kifumat.push(matchlengthinfo);
     this.kifumat.push('');
   }
 
   setGameOption() {
    if (this.appModeFlag) {
-      this.site     = "Backgammon App";
+      this.site     = "Backgammon vs AI";
       this.date     = this.getToday();
       this.player1  = "You";
-      this.player2  = "AI";
+      this.player2  = this.gameobj.aiEngine;
       this.matchlen = this.gameobj.matchLength;
       this.date8    = this.date.replace(/\//g, ""); //2023/05/17 -> 20230517
     } else {
