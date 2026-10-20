@@ -2,7 +2,7 @@
 // (参考) https://developer.mozilla.org/ja/docs/Web/Progressive_web_apps/Offline_Service_workers
 'use strict';
 
-const cacheName = 'BackGammonVsAI-v20261008';
+const cacheName = 'BackGammonVsAI-v20261020';
 const ORIGIN = location.origin; //ポート番号を含むorigin(LAN内IP:ポートなどでも動作させる)
 
 const contentToCache = [
@@ -15,6 +15,7 @@ const contentToCache = [
   ORIGIN + '/GammonAppWithAI/js/BgGame_class.js',
   ORIGIN + '/GammonAppWithAI/js/BgAiWildbg_class.js',
   ORIGIN + '/GammonAppWithAI/js/BgAiGammonNet_class.js',
+  ORIGIN + '/GammonAppWithAI/js/BgAiGnubg_class.js',
   ORIGIN + '/GammonAppWithAI/js/BgKifu_class.js',
   ORIGIN + '/GammonAppWithAI/js/BgDomUtil_class.js',
   ORIGIN + '/GammonAppWithAI/js/BgAppBoard_class.js',
@@ -34,7 +35,6 @@ const contentToCache = [
   ORIGIN + '/GammonAppWithAI/wasm/gammonnet/manifest.json',
   ORIGIN + '/GammonAppWithAI/wasm/gammonnet/strehl-prob5-512-512-256-256_v1.6.0_2026-10-06.bin16',
   ORIGIN + '/GammonAppWithAI/wasm/gammonnet/strehl-prune-32_v1.6.0_2026-10-06.bin16',
-  ORIGIN + '/GammonAppWithAI/js/BgAiGnubg_class.js',
   ORIGIN + '/GammonAppWithAI/wasm/gnubg/gnubg_worker.js',
   ORIGIN + '/GammonAppWithAI/wasm/gnubg/gnubg.js',
   ORIGIN + '/GammonAppWithAI/wasm/gnubg/gnubg.wasm',

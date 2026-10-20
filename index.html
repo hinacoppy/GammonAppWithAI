@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="/css/font-awesome-animation.min.css" />
   <link rel="icon" href="icon/favicon.ico" />
   <link rel="apple-touch-icon" href="icon/apple-touch-icon.png" />
-  <title>BackGammon vs AI</title>
+  <title>Backgammon vs AI</title>
 </head>
 <body>
  <article class="container vsAIgammon">
@@ -79,22 +79,20 @@
      </td>
     </tr>
     <tr>
-     <td>Show pip:</td>
-     <td>
+     <td colspan="2">
+     <span>Show pip:</span>
+     <span>
       <label class="switch"><input type="checkbox" id="showpip" name="showpip" checked /> <span class="slider"></span></label>
-     </td>
-    </tr>
-    <tr>
-     <td>Flash movable pt: &ensp;</td>
-     <td>
+     </span> &ensp;
+     <span>Flash movable pt:</span>
+     <span>
       <label class="switch"><input type="checkbox" id="flashdest" name="flashdest" checked /> <span class="slider"></span></label>
-     </td>
-    </tr>
-    <tr>
-     <td>Jacoby rule:</td>
-     <td>
+     </span> &ensp;
+     <span>Jacoby rule:</span>
+     <span>
       <label class="switch"><input type="checkbox" id="jacoby" name="jacoby" checked /> <span class="slider"></span></label>
       <span class="small">(unlimited only)</span>
+     </span> &ensp;
      </td>
     </tr>
     <tr>
@@ -103,6 +101,8 @@
       <span class="segmented">
        <label><input type="radio" name="aiengine" value="wildbg" checked />
               <span class="seglabel">Wildbg <span class="small">(PR: 18.5)</span></span></label>
+      </span>
+      <span class="segmented">
        <label><input type="radio" name="aiengine" value="gammonnet" />
               <span class="seglabel">gammonNet <span class="small">(PR: 2.1)</span></span></label>
       </span>
@@ -114,7 +114,32 @@
       <span class="segmented">
        <label><input type="radio" name="aiengine" value="gnubg" />
               <span class="seglabel">gnubg <span class="small">(PR: 1.8)</span></span></label>
-              &ensp; <span class="small">(applies from New Game)</span>
+      </span>
+     </td>
+    </tr>
+    <tr>
+     <td>Game type:</td>
+     <td>
+      <span class="segmented">
+       <label><input type="radio" name="gametype" value="normal" checked />
+              <span class="seglabel">NormalGammon</span></label>
+      </span>
+      <span class="segmented">
+       <label><input type="radio" name="gametype" value="nack" />
+              <span class="seglabel">NackGammon</span></label>
+      </span>
+     </td>
+    </tr>
+    <tr>
+     <td></td>
+     <td>
+      <span class="segmented">
+       <label><input type="radio" name="gametype" value="hyper" />
+              <span class="seglabel">HyperGammon</span></label>
+      </span>
+      <span class="segmented">
+       <label><input type="radio" name="gametype" value="nagoya" />
+              <span class="seglabel">NagoyaFairy</span></label>
       </span>
      </td>
     </tr>

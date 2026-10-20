@@ -1,12 +1,12 @@
 {
   "name": "Backgammon",
-  "short_name": "BackgammonApp",
+  "short_name": "Backgammon",
   "start_url": "/GammonAppWithAI/index.html",
   "scope": "/GammonAppWithAI/",
   "display": "fullscreen",
   "background_color": "#fff",
   "theme_color": "#fff",
-  "description": "バックギャモンアプリ",
+  "description": "バックギャモン",
   "copyright": "(C)hinacoppy 2026",
   "orientation": "landscape",
   "icons": [{

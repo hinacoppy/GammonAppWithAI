@@ -214,6 +214,7 @@ class BgGame {
     this.scoreinfo[1].textContent = 0;
     this.scoreinfo[2].textContent = 0;
     document.querySelectorAll(".pip").forEach((el) => BgDomUtil.toggle(el, this.showpipflg));
+    this.gametype = document.querySelector("[name=gametype]:checked").value;
   }
 
   beginNewGame(newmatch = false) {
@@ -230,7 +231,12 @@ class BgGame {
   }
 
   getInitPos(gametype) {
-    return "-b----E-C---eE---c-e----B-";
+    switch (gametype) {
+      case "nack":   return "-bb---D-C---dD---c-d---BB-"; //Nack gammon
+      case "hyper":  return "-aaa------------------AAA-"; //Hyper gammon
+      case "nagoya": return "-e---C-E----bB----e-c---E-"; //Nagoya side event gammon
+      default:       return "-b----E-C---eE---c-e----B-"; //Normal gammon
+    }
   }
 
   async rollAction(openroll = false) {
@@ -452,6 +458,9 @@ class BgGame {
 
   calcScore(player) {
     let [cubeprice, gammonprice] = this.xgid.get_gamesc( BgUtil.cvtTurnGm2Xg(player) );
+    if (this.gamemode == "hyper") {
+      gammonprice = this.calcHyperGammonScore(player);
+    }
     if (this.jacobyflg && this.matchLength == 0 && cubeprice == 1) {
       gammonprice = 1;
     }
@@ -464,6 +473,37 @@ class BgGame {
     this.xgid.sc_me = this.score[1];
     this.xgid.sc_yu = this.score[2];
     this.matchwinflg = (this.matchLength != 0) && (this.score[w] >= this.matchLength);
+  }
+
+  calcHyperGammonScore(player) {
+    let boff = [3, 3];
+    let bgarea = [0, 0];
+    const pos = this.xgid.get_position();
+    const posary = pos.split("");
+    for (let i = 0; i <= 25; i++) {
+      const asc = posary[i].charCodeAt(0);
+      if (asc == "-".charCodeAt(0)) {
+        //do nothing
+      } else if (asc >= "A".charCodeAt(0) && asc <= "Z".charCodeAt(0)) {
+        const ptnum = asc - "A".charCodeAt(0) + 1;
+        boff[0] -= ptnum;
+        if (i > 18) { bgarea[0] += ptnum; }
+      } else if (asc >= "a".charCodeAt(0) && asc <= "z".charCodeAt(0)) {
+        const ptnum = asc - "a".charCodeAt(0) + 1;
+        boff[1] -= ptnum;
+        if (i < 7) { bgarea[1] += ptnum; }
+      }
+    } // for
+
+    const looser = player ? 1 : 0;
+    const dbloffer = this.xgid.get_dbloffer();
+    const contact = this.xgid._have_contact();
+
+    if (boff[looser] > 0)        { return 1; }
+    else if (dbloffer)           { return 1; }
+    else if (contact)            { return 3; }
+    else if (bgarea[looser] > 0) { return 3; }
+    else                         { return 2; }
   }
 
   canDouble(player) {
