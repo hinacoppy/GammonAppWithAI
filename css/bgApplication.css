@@ -141,7 +141,7 @@ select{
   line-height:8vmin;
 }
 .small{
-  font-size:smaller;
+  font-size:70%;
 }
 
 /* toggle switch ----------------------------------------- */
@@ -195,11 +195,15 @@ input:checked + .slider:before{
   float:left;
   padding:0em 0.5em;
   text-align:center;
-  width:20vmax;
+  width:17vmax;
   line-height:8vmin;
   background-color:var(--segmented-disable-bg);
   border-color:var(--segmented-frame);
   color:var(--segmented-disable-fg);
+  white-space:nowrap;
+}
+.segmented .four{
+  width:12vmax;
 }
 .segmented input{
   display:none;

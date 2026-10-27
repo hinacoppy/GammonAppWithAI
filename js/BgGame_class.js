@@ -37,19 +37,23 @@ class BgGame {
     this.setEventHandler();
     this.setChequerDraggable();
 
-    this.aiEngine = this.loadAiEngine(); //'wildbg' | 'gammonnet' | 'gnubg'
-    this.ai = this.createAi(this.aiEngine);
-    this.setAiEngineRadio(this.aiEngine);
-
+    this.initAiEngine();
     this.initGameOption();
     this.beginNewGame(true); //スコアをリセットして新規ゲームを始める
     this.watchAiReady();
   } //end of constructor()
 
+  initAiEngine() {
+    this.aiEngine = this.loadAiEngine();
+    this.ai = this.createAi(this.aiEngine);
+    this.setAiEngineRadio(this.aiEngine);
+  }
+
   loadAiEngine() {
+    const enginelist = ["wildbg", "gmnet1", "gmnet2", "gnubg1", "gnubg2", "gnubg3"];
     try {
-      const e = localStorage.getItem("aiEngine");
-      return (e === "gammonnet" || e === "gnubg") ? e : "wildbg";
+      const engine = localStorage.getItem("gammonApp.aiEngine");
+      return enginelist.includes(engine) ? engine : "wildbg";
     } catch (e) {
       return "wildbg"; //localStorageが使えない場合は既定のエンジン
     }
@@ -71,11 +75,20 @@ class BgGame {
 
     let settings;
     switch(engine) {
-    case "gammonnet":
+    case "gmnet1":
+      settings = { jacoby: this.jacobyflg, level: "instant" };
+      return new BgAiGammonNet('wasm/gammonnet/gammonnet_worker.js', settings);
+    case "gmnet2":
       settings = { jacoby: this.jacobyflg, level: "normal" };
       return new BgAiGammonNet('wasm/gammonnet/gammonnet_worker.js', settings);
-   case "gnubg":
+   case "gnubg1":
+      settings = { jacoby: this.jacobyflg, level: "instant" };
+      return new BgAiGnubg('wasm/gnubg/gnubg_worker.js', settings);
+   case "gnubg2":
       settings = { jacoby: this.jacobyflg, level: "normal" };
+      return new BgAiGnubg('wasm/gnubg/gnubg_worker.js', settings);
+   case "gnubg3":
+      settings = { jacoby: this.jacobyflg, level: "thorough" };
       return new BgAiGnubg('wasm/gnubg/gnubg_worker.js', settings);
     case "wildbg":
     default:
@@ -104,7 +117,7 @@ class BgGame {
     if (engine === this.aiEngine) { return; }
     this.ai.worker.terminate();
     this.aiEngine = engine;
-    try { localStorage.setItem("aiEngine", engine); } catch (e) { /* 保存できなくても動作は続ける */ }
+    try { localStorage.setItem("gammonApp.aiEngine", engine); } catch (e) { /* 保存できなくても動作は続ける */ }
     this.aiReady = false;
     this.ai = this.createAi(engine);
     this.watchAiReady();
@@ -119,6 +132,7 @@ class BgGame {
     this.takebtn       = byId("takebtn");
     this.dropbtn       = byId("dropbtn");
     this.donebtn       = byId("donebtn");
+    this.passbtn       = byId("passbtn");
     this.undobtn       = byId("undobtn");
     this.forcedbtn     = byId("forcedbtn");
     this.newgamebtn    = byId("newgamebtn");
@@ -126,7 +140,6 @@ class BgGame {
     this.settingbtn    = byId("settingbtn");
     this.dlkifubtn     = byId("downloadkifubtn");
     this.openrollbtn   = byId("openingroll");
-    this.passbtn       = byId("passbtn");
     this.gameendnextbtn= byId("gameendnextbtn");
     this.gameendokbtn  = byId("gameendokbtn");
     this.diceAsBtn     = document.querySelectorAll("#dice10,#dice11,#dice20,#dice21");
@@ -407,13 +420,13 @@ class BgGame {
     BgDomUtil.setPos(this.settings, this.calcCenterPosition("S", this.settings));
     this.showEl(this.settings); //画面表示
     this.saveSettingVars(); //設定情報を退避しておく
-    this.setButtonEnabled(this.settingbtn, false);
+    this.settingbtn.disabled = true; //ボタンを押せない
   }
 
   cancelSettingPanelAction() {
     BgDomUtil.hide(this.settings); //画面を消す
     this.loadSettingVars(); //設定情報を戻す
-    this.setButtonEnabled(this.settingbtn, true);
+    this.settingbtn.disabled = false; //ボタンを押せる
   }
 
   newGameAction() {
@@ -433,7 +446,7 @@ class BgGame {
   }
 
   passAction() {
-    this.xgid.dice = "66";
+    this.xgid.dice = BgUtil.randomdice(this.dicemx); //とりあえず振る
     this.kifuobj.pushKifuXgid(this.xgid.xgidstr);
     this.doneAction();
   }
@@ -526,7 +539,7 @@ class BgGame {
     this.doublebtn.disabled = !this.canDouble(player);
     const closeout = this.isCloseout(player);
     BgDomUtil.toggle(this.rollbtn, !closeout); //rollボタンかpassボタンのどちらかを表示
-    BgDomUtil.toggle(this.passbtn,  closeout);
+    BgDomUtil.toggle(this.passbtn, closeout);
     if (player) {
       this.showElement(this.rolldouble, 'R', player);
     } else {
@@ -535,7 +548,13 @@ class BgGame {
   }
 
   showDoneUndoPanel(player, opening = false) {
-    this.donebtn.disabled = (!this.xgid.moveFinished() && this.flashflg);
+    const canmove = !this.xgid.moveFinished();
+    const onthebar = this.xgid.existMyChequer(25);
+    const buttonmsg = canmove  ? '<i class="fas fa-check-circle"></i> Done'
+                    : onthebar ? '<i class="fas fa-ban"></i> Danced'
+                               : '<i class="fas fa-ban"></i> Blocked';
+    this.donebtn.innerHTML = buttonmsg; //Done, Danced, Blockedを切替え
+    this.donebtn.disabled = (canmove && this.flashflg);
     //常にダイスの下に表示(opening変数は使わなくなった)
     if (player) {
       this.showElement(this.doneundo, 'R', player, 12);
@@ -615,7 +634,7 @@ class BgGame {
     return {left:wx, top:wy};
   }
 
-  // ---- AI(wildbg) ----
+  // ---- AI処理群 ----
   showAiStatus(msg) {
     this.aistatus.textContent = msg;
     this.showElement(this.aistatus, 'L', this.aiPlayer,  12); //yoffsetを設定しダイスに重ねない
@@ -626,7 +645,7 @@ class BgGame {
   }
 
   getAiBoard(turn) {
-    return BgAiWildbg.xgidPosToBoard(this.xgid.get_position(), turn);
+    return this.ai.makeBoard(this.xgid.get_position(), turn);
   }
 
   //AIの手番開始(ロール前): ダブルするか、ロールする
@@ -1026,10 +1045,6 @@ class BgGame {
     this.dragObject = null; //ヒットしたチェッカーを戻すアニメーションは不要
     this.dragStartPt = this.board.getDragEndPoint(position, BgUtil.cvtTurnGm2Bd(this.player));
     this.dragStopAction(position, false); //ヒット時のアニメーションをしない
-  }
-
-  setButtonEnabled(button, enable) {
-    button.disabled = !enable;
   }
 
   saveSettingVars() {

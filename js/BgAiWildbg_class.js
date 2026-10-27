@@ -70,4 +70,9 @@ class BgAiWildbg {
     }
     return out.join('');
   }
+
+  // ゲームから渡されたXGID位置を、このエンジン用の盤面表現に変換する
+  makeBoard(xgidPos, turn) {
+    return BgAiWildbg.xgidPosToBoard(xgidPos, turn);
+  }
 }

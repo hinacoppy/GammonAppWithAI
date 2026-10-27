@@ -42,4 +42,9 @@ class BgAiGnubg {
   async shouldTake(board, xgidstr) {
     return (await this.call('take', xgidstr, this.opts)).shouldTake;
   }
+
+  // XGID文字列をそのまま使うので盤面配列は不要
+  makeBoard(xgidPos, turn) {
+    return null;
+  }
 }

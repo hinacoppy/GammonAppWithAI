@@ -34,13 +34,13 @@
 
   <section id="panelholder" style="display: none;">
    <div id="rolldouble" class="panel">
-    <button id="doublebtn" class="oparationbtn"><i class="fas fa-dice-d6"></i> Double</button> &emsp;&emsp;&emsp;
+    <button id="doublebtn" class="oparationbtn"><i class="fas fa-dice-d6"></i> Double</button> &emsp;&emsp;
     <button id="rollbtn" class="oparationbtn"><i class="fas fa-dice"></i> Roll</button>
     <button id="passbtn" class="oparationbtn"><i class="fas fa-ban"></i> Pass</button>
    </div>
 
    <div id="takedrop" class="panel">
-     <button id="dropbtn" class="oparationbtn"><i class="fas fa-thumbs-down"></i> Pass</button> &emsp;&emsp;&emsp;
+     <button id="dropbtn" class="oparationbtn"><i class="fas fa-thumbs-down"></i> Pass</button> &emsp;&emsp;
      <button id="takebtn" class="oparationbtn"><i class="fas fa-thumbs-up"></i> Take</button>
    </div>
 
@@ -100,11 +100,15 @@
      <td>
       <span class="segmented">
        <label><input type="radio" name="aiengine" value="wildbg" checked />
-              <span class="seglabel">Wildbg <span class="small">(PR: 18.5)</span></span></label>
+              <span class="seglabel">Wildbg <span class="small">弱(PR: 18.3)</span></span></label>
       </span>
       <span class="segmented">
-       <label><input type="radio" name="aiengine" value="gammonnet" />
-              <span class="seglabel">gammonNet <span class="small">(PR: 2.1)</span></span></label>
+       <label><input type="radio" name="aiengine" value="gmnet1" />
+              <span class="seglabel">gammonNet1 <span class="small">強(PR: 1.9)</span></span></label>
+      </span>
+      <span class="segmented">
+       <label><input type="radio" name="aiengine" value="gmnet2" />
+              <span class="seglabel">gammonNet2 <span class="small">遅(PR: 1.7)</span></span></label>
       </span>
      </td>
     </tr>
@@ -112,8 +116,16 @@
      <td></td>
      <td>
       <span class="segmented">
-       <label><input type="radio" name="aiengine" value="gnubg" />
-              <span class="seglabel">gnubg <span class="small">(PR: 1.8)</span></span></label>
+       <label><input type="radio" name="aiengine" value="gnubg1" />
+              <span class="seglabel">gnubg1 <span class="small">速(PR: 2.6)</span></span></label>
+      </span>
+      <span class="segmented">
+       <label><input type="radio" name="aiengine" value="gnubg2" />
+              <span class="seglabel">gnubg2 <span class="small">強(PR: 1.7)</span></span></label>
+      </span>
+      <span class="segmented">
+       <label><input type="radio" name="aiengine" value="gnubg3" />
+              <span class="seglabel">gnubg3 <span class="small">強(PR: 0.9)</span></span></label>
       </span>
      </td>
     </tr>
@@ -122,24 +134,19 @@
      <td>
       <span class="segmented">
        <label><input type="radio" name="gametype" value="normal" checked />
-              <span class="seglabel">NormalGammon</span></label>
+              <span class="seglabel four">Normal</span></label>
       </span>
       <span class="segmented">
        <label><input type="radio" name="gametype" value="nack" />
-              <span class="seglabel">NackGammon</span></label>
+              <span class="seglabel four">Nack</span></label>
       </span>
-     </td>
-    </tr>
-    <tr>
-     <td></td>
-     <td>
       <span class="segmented">
        <label><input type="radio" name="gametype" value="hyper" />
-              <span class="seglabel">HyperGammon</span></label>
+              <span class="seglabel four">Hyper</span></label>
       </span>
       <span class="segmented">
        <label><input type="radio" name="gametype" value="nagoya" />
-              <span class="seglabel">NagoyaFairy</span></label>
+              <span class="seglabel four">NagoyaFairy</span></label>
       </span>
      </td>
     </tr>
