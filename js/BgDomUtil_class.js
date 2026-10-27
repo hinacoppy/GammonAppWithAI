@@ -71,6 +71,8 @@ class BgDomUtil {
   //jQueryの.animate({left,top}, duration).promise()相当
   static animatePos(el, pos, duration) {
     return new Promise((resolve) => {
+      //直前のsetPos(showBoard2での並べ直し)を描画に確定させてからtransitionを始める。
+      void el.offsetLeft; //レイアウトを同期実行して確定させる(値は使わない)
       el.style.transition = `left ${duration}ms, top ${duration}ms`;
       requestAnimationFrame(() => { BgDomUtil.setPos(el, pos); });
       setTimeout(() => {

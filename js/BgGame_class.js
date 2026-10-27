@@ -274,9 +274,9 @@ class BgGame {
     }
     this.swapChequerDraggable(this.player);
     this.pushXgidPosition();
-    this.forcedflg = this.xgid.isForcedMove(); //rewindAction()時にも呼ばれるため、rollAction()ではなくここで確認
-    BgDomUtil.toggle(this.forcedbtn, this.forcedflg);
-    this.forcedbtn.disabled = this.xgid.moveFinished();
+    this.forcedflg = this.xgid.isForcedMove();
+    BgDomUtil.toggle(this.forcedbtn, this.forcedflg); //表示/非表示
+    this.forcedbtn.disabled = this.xgid.moveFinished(); //押せる/押せない
     this.showDoneUndoPanel(this.player, openroll);
   }
 
@@ -446,7 +446,7 @@ class BgGame {
   }
 
   passAction() {
-    this.xgid.dice = BgUtil.randomdice(this.dicemx); //とりあえず振る
+    this.xgid.dice = BgUtil.randomdice(this.dicemx)[2]; //とりあえず振る
     this.kifuobj.pushKifuXgid(this.xgid.xgidstr);
     this.doneAction();
   }
@@ -713,7 +713,6 @@ class BgGame {
       this.showAiStatus(movestr);
       for (const m of play) {
         //await BgUtil.sleep(500); //チェッカームーブはアニメーションするのでウェイトは入れない
-        //known bug: チェッカーアニメーションの際に異なるチェッカーをつかんで動かすことがある
         if (seq != this.gameSeq) { return; }
         const hit = this.xgid.isHitted(m.to);
         if (hit) {
