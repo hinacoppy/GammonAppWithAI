@@ -3,19 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="author" content="(C)hinacoppy 2019 - 2026" />
-  <title>Backgammon vs AI help</title>
   <style>
-   body{
-     padding:10px;
-   }
-   h4{
-     margin-block-end:0;
-   }
-   .contents{
-     padding-left:20px;
-     margin-block-start:0;
-   }
+    body{
+      padding:10px;
+      background-color:#efe;
+    }
+    h4{
+      margin-block-end:0;
+    }
+    .contents{
+      padding-left:20px;
+      margin-block-start:0;
+    }
   </style>
+  <link rel="icon" href="icon/favicon.ico" />
+  <link rel="apple-touch-icon" href="icon/apple-touch-icon.png" />
+  <title>Backgammon vs AI help</title>
 </head>
 
 <body>
@@ -24,50 +27,57 @@
   <h3>◆このアプリは何？</h3>
 
   <p class="contents">
-   コンピュータ(AI)を相手にバックギャモンが遊べるアプリです。<br>
-   AI は下記の３つのバックギャモン AI エンジンから選ぶことができます。<br>
-   AI エンジンはブラウザの中で動くため、起動してしまえばサーバーとの通信は必要ありません。<br>
+   バックギャモンが遊びたい！でも対戦相手がいない！ といった状況のときに、コンピュータ(AI) と気軽に対戦できるアプリです。<br>
+   AI エンジンはブラウザの中で動くため、起動してしまえばネットワークアクセスはありません。<br>
+   SPA(Single Page Application) として開発しています。PC、スマホ、タブレットのブラウザで動かすことができます。<br>
+  ホーム画面に追加の機能を使えば、スマホ、タブレットでは画面内にアイコンが登録されます。そのアイコンをタップすれば、普通のアプリと同じように起動できます。<br>
   </p>
 
   <h3>◆何ができるの？</h3>
 
   <p class="contents">
-   バックギャモンが遊びたい！でも対戦相手がいない！ といった状況のときに、AI と気軽に対戦できます。<br>
-   あなたは常に画面の下側の駒(黒)、AI は上側の駒(白)を持ちます。<br>
-   バックギャモン AI エンジンには、wildbg, gammonNet, gnubg を選択することができます。<br>
-   gammonNet, gnubg は強さを選ぶことができます。<br>
-   スマートフォンでも動きますが、画面が小さいため、タブレットの使用をお勧めします。<br>
-   人vs人の対戦機能や、世界中の人と対戦する機能はありません。<br>
-  </p>
-
-  <h4>●主な機能</h4>
-  <p class="contents">
-   ・Opening Roll で先手後手を決め、AI とゲームを進めます。AI もダブル、テイク/パス(ドロップ)の判断をします。<br>
-   ・Unlimited Game とマッチゲーム(1～7pt)に対応しています。Unlimited Game では Jacoby ルールが使えます。<br>
+   ・Opening Roll で先手後手を決め、AI とゲームを進めます。AI もダブル、テイク/パスの判断をします。<br>
+   ・人間は黒駒を持ち、ボードの右下がインナーボード(右側ベアオフ)、AI は白駒で右上がインナーボードになります。<br>
    ・駒のタップあるいはドラッグでその駒を動かせます。<br>
+   ・Unlimited Game とマッチゲーム(1～7pt)に対応しています。<br>
+   ・Unlimited Game では Jacoby ルールが使えます。初期設定では Jacoby ルールは有効になっています。<br>
+   ・バックギャモン AI エンジンには、Wildbg、gammonNet、gnubg を選択することができます。<br>
+     &emsp;&emsp;→ gammonNetは２つ、gnubgは３つの思考強さを選ぶことができます。<br>
+   ・初期配置の異なるフェアリーギャモンも遊ぶことができます。<br>
+     &emsp;&emsp;→ NormalGammon、NackGammon、HyperGammon、NagoyaFairy<br>
    ・棋譜出力機能があります。ゲームの棋譜をダウンロードして XG などの解析ツールに掛けることにより、エラー解析ができます。<br>
   </p>
 
   <h3>◆どうやって使うの？</h3>
 
   <p class="contents">
-   まずは「全画面表示のアプリとして使う」の手順に従ってホーム画面に登録してください。<br>
-   ホーム画面に登録されたアイコンをタップすればアプリが立ち上がります。<br>
-   AI の準備ができるまで、画面に「AI loading...」と表示されます。表示が消えたら [Opening Roll] が押下可能になります。<br>
-   <br>
-   (1)[Opening Roll] をタップして、先手を決めます。ダイスの目の大きい方が先手です。<br>
+   (1)[<i class="fas fa-dice"></i> Opening Roll] をタップして、先手後手を決めます。ダイスの目の大きい方が先手です。<br>
    (2)自分の手番では、ダイスの目に従って駒をドラッグして動かします。駒やポイントをタップして動かすこともできます。<br>
-   (3)動かし終わったら [Done] をタップして手番を AI に渡します。(自分側のダイスをタップしても同じです)<br>
-   &emsp;→間違えたときは [Undo] で動かす前に戻せます。<br>
+   (3)動かし終わったら [<i class="fas fa-check-circle"></i> Done] をタップして手番を AI に渡します。(自分側のダイスをタップしても同じです)<br>
+   &emsp;→ やり直すときは [<i class="fas fa-undo"></i> Undo] で動かす前に戻せます。<br>
    (4)AI の手番では、AI が自動でロール(またはダブル)して駒を動かします。<br>
-   (5)自分の手番のロール前には [Double] か [Roll] を選べます。クローズアウトされているときは、[Roll] の代わりに [Pass]
-   が表示されます。<br>
-   (6)フォーストムーブのときは [Forced] ボタンを表示します。<br>
-   (7)AI からダブルされたときは、[Take] か [Pass] を選びます。<br>
-   (8)ゲームが終わると結果が表示されます。[Next] で次のゲームに進みます。(マッチに決着がついたときは [OK]
-   が表示されます)<br>
+   (5)自分の手番のロール前には [<i class="fas fa-flag" style="color:lightgray"></i>](Resign※)、[<i class="fas fa-dice-d6"></i> Double] 、[<i class="fas fa-dice"></i> Roll] を選べます。
+   クローズアウトされているときは、[<i class="fas fa-dice"></i> Roll] の代わりに [<i class="fas fa-ban"></i> Pass] が表示されます。<br>
+   (6)フォーストムーブのときは [<i class="fas fa-dragon"></i> Forced] ボタンを表示します。<br>
+   (7)AI からダブルされたときは [<i class="fas fa-thumbs-up"></i> Take] か [<i class="fas fa-thumbs-down"></i> Pass] を選びます。<br>
+   (8)ゲームが終わると結果が表示されます。[<i class="fas fa-arrow-alt-circle-right"></i> Next] で次のゲームに進みます。
+   (マッチに決着がついたときは [<i class="fas fa-check-circle"></i> OK] が表示されます)<br>
    <br>
    ボタンの意味は直観的になるように心掛けていますので、すぐに理解できると思います。<br>
+   <br>
+   ※ Resign(負け宣言)時の得点計算は下記の単純なロジックです。（Resignした側の視点）<br>
+    &emsp;→ Unlimited Game で Jacoby Rule が有効、かつセンターキューブのときは、シングル負け。<br>
+    &emsp;→ 一枚でも上がっていれば、シングル負け。<br>
+    &emsp;→ 一枚も上がっていなくてコンタクトがあれば、バックギャモン負け。<br>
+    &emsp;→ コンタクトがなくても、相手のインナーボード(24pt～19pt)に自駒があれば、バックギャモン負け。
+            (たとえ相手が1枚も上がっていなくても)<br>
+    &emsp;→ そうでなければ、ギャモン負け。(たとえ次ロールで1枚以上上がれるとしても)<br>
+   <br>
+   ※ HyperGammonの得点計算は下記になります。（勝ち側の視点）<br>
+    &emsp;→ Unlimited Game で Jacoby Rule が有効、かつセンターキューブのときは、シングル勝ち。<br>
+    &emsp;→ 相手が１枚以上上がっていればシングル勝ち。<br>
+    &emsp;→ 相手駒が自分のインナーボードまたはバーにあればバックギャモン勝ち。(相手から見て25pt～19pt)<br>
+    &emsp;→ それ以外はギャモン勝ち。<br>
   </p>
 
   <h3>◆駒の動かし方</h3>
@@ -94,7 +104,7 @@
   <p class="contents">
    [<i class="fas fa-bars"></i> Settings] をタップすると設定画面が表示されます。<br>
    <br>
-   [Match length] マッチポイント数を設定できます。$ にすると Unlimited Game になります。<br>
+   [Match length] マッチポイント数を設定できます。$ は Unlimited Game です。<br>
    [Show pip] ピップカウントの表示/非表示を切り替えます。<br>
    [Flash movable pt] ダイスの目に従って動かせるポイントを光らせます。<br>
     &emsp;→この機能が OFF のときは、掴んだ駒より前であれば動かせます。(イリーガルムーブができるようになります)<br>
@@ -112,14 +122,6 @@
    [<i class="fas fa-download"></i> Kifu] MAT形式の棋譜を出力(ダウンロード)します。<br>
    [<i class="fas fa-question"></i> Help] ヘルプ画面(この画面)が表示されます。<br>
     &emsp;→ヘルプ画面は別画面で開いていますので、アプリに戻るには画面を閉じてください。<br>
-   <br>
-   [<i class="fas fa-flag" style="color: #aaa"></i> Resign] 手番側が負けを宣言します。<br>
-    &emsp;→単純なロジックで「シングル負け、ギャモン負け、バックギャモン負け」を判定しています。<br>
-    &emsp;&emsp;→一枚でも上がっていれば、シングル負け。<br>
-    &emsp;&emsp;→一枚も上がっていなくてコンタクトがあれば、バックギャモン負け。<br>
-    &emsp;&emsp;→コンタクトがなくても、相手のインナーボード(24pt～19pt)に自駒があれば、バックギャモン負け。
-                  (たとえ相手が1枚も上がっていなくても)<br>
-    &emsp;&emsp;→そうでなければ、ギャモン負け。(たとえ次ロールで1枚以上上がれるとしても)<br>
   </p>
 
   <h3>◆仕様という名の Known Bugs</h3>
@@ -149,7 +151,7 @@
    (5)次回からはこのアイコンをタップすればアプリが開く<br>
   </p>
 
-  <h4>●Apple端末(iPhone, iPadなど)の場合</h4>
+  <h4>●Apple端末(iPhone、iPadなど)の場合</h4>
   <p class="contents">
    (1)Safariでこのアプリを開く<br>
    (2)送信アイコン(□から↑が突き出ているアイコン)をタップ<br>
@@ -159,7 +161,17 @@
    (6)次回からはこのアイコンをタップすればアプリが開く<br>
    <br>
    それぞれの端末の標準ブラウザでなければ「ホーム画面に追加」機能が使えません。ご注意ください。<br>
-   一度起動してしまえば、AI を含めてネットワークアクセスはありません。<br>
+  </p>
+
+  <h3>◆機能追加履歴</h3>
+
+  <p class="contents">
+   (2026/10/02) コンピュータ(AI)と対戦できるGammonアプリの開発に着手。対戦相手のAIは Wildbg。<br>
+   (2026/10/06) GammonNet を対戦相手に追加。<br>
+   (2026/10/07) gnubg を対戦相手に追加。<br>
+   (2026/10/15) 初期配置が異なるフェアリーギャモンも遊べるように機能追加。<br>
+   (2026/10/22) AIのPRを計測。AI選択画面に表示。<br>
+   (2026/11/04) いくつかのバグ修正、UI調整などを実施。<br>
   </p>
 
   <h3>◆その他</h3>
@@ -170,6 +182,6 @@
 
   <footer>(C)hinacoppy 2019 - 2026</footer>
 
-</body>
 <script src="/js/fontawesome-inuse.min.js" defer></script>
+</body>
 </html>

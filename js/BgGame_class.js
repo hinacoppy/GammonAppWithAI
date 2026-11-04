@@ -849,7 +849,7 @@ class BgGame {
   }
 
   dragStartAction(event, position) {
-    this.mouseRbtnFlg = (event.button != 0); //主ボタン(左)のときだけfalse
+    this.mouseRbtnFlg = (event.button == 2); //右ボタンのときだけtrue、左ボタンとtouchイベントはfalse
     this.dragObject = event.currentTarget; //dragStopAction()で使うがここで取り出しておかなければならない
     const id = event.currentTarget.id;
     this.dragStartPt = this.board.getDragStartPoint(id, BgUtil.cvtTurnGm2Bd(this.player));
