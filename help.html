@@ -8,10 +8,10 @@
       padding:10px;
       background-color:#efe;
     }
-    h4{
+    #helpdoc h4{
       margin-block-end:0;
     }
-    .contents{
+    #helpdoc .contents{
       padding-left:20px;
       margin-block-start:0;
     }
@@ -30,7 +30,7 @@
 </head>
 
 <body>
-  <nav><a href="./"><button><i class="fas fa-undo"></i> ゲームに戻る</button></a></nav>
+ <main id="helpdoc">
   <h2>Backgammon vs AI</h2>
 
   <h3>◆このアプリは何？</h3>
@@ -38,8 +38,9 @@
   <p class="contents">
    バックギャモンが遊びたい！でも対戦相手がいない！ といった状況のときに、コンピュータ(AI) と気軽に対戦できるアプリです。<br>
    AI エンジンはブラウザの中で動くため、起動してしまえばネットワークアクセスはありません。<br>
-   SPA(Single Page Application) として開発しています。PC、スマホ、タブレットのブラウザで動かすことができます。<br>
-  ホーム画面に追加の機能を使えば、スマホ、タブレットでは画面内にアイコンが登録されます。そのアイコンをタップすれば、普通のアプリと同じように起動できます。<br>
+   SPA(Single Page Application)かつ PWA(Progressive Web App)として開発しています。PC、スマホ、タブレットのブラウザで動かせます。<br>
+   「ホーム画面に追加」の機能を使えば、スマホ、タブレットでは画面内にアイコンが登録されます。<br>
+   そのアイコンをタップすれば、普通のアプリと同じように起動できます。一度読み込んでしまえばオフラインでも遊べます。<br>
   </p>
 
   <h3>◆何ができるの？</h3>
@@ -130,7 +131,7 @@
    [<i class="fas fa-times"></i> Cancel] 何も設定せずに設定画面を閉じます。<br>
    [<i class="fas fa-download"></i> Kifu] MAT形式の棋譜を出力(ダウンロード)します。<br>
    [<i class="fas fa-question"></i> Help] ヘルプ画面(この画面)が表示されます。<br>
-    &emsp;→ヘルプ画面は別画面で開いていますので、アプリに戻るには画面を閉じてください。<br>
+    &emsp;→ヘルプ画面を閉じるには [<i class="fas fa-times"></i> Close] をタップしてください。<br>
   </p>
 
   <h3>◆仕様という名の Known Bugs</h3>
@@ -190,6 +191,7 @@
   </p>
 
   <footer>(C)hinacoppy 2019 - 2026</footer>
+ </main>
 
 <script src="/js/fontawesome-inuse.min.js" defer></script>
 </body>

@@ -32,6 +32,7 @@ class BgGame {
     this.gameFinished = true;
     this.settingVars = {}; //設定内容を保持するオブジェクト
     this.outerDragFlag = false; //駒でない部分をタップしてドラッグを始めたら true
+    this.helploaded = false; //ヘルプ画面が読み込まれていれば true
 
     this.setDomNames();
     this.setEventHandler();
@@ -42,6 +43,25 @@ class BgGame {
     this.beginNewGame(true); //スコアをリセットして新規ゲームを始める
     this.watchAiReady();
   } //end of constructor()
+
+  async loadHelpDialog() {
+    this.helpdialog.showModal();
+    const body = document.getElementById("helpbody");
+    if (this.helploaded) { return; }
+    try {
+      const res = await fetch("help.html");
+      if (!res.ok) { throw new Error(res.status); }
+      const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+      body.innerHTML = doc.getElementById("helpdoc").innerHTML;
+      this.helploaded = true;
+    } catch (e) {
+      body.textContent = "ヘルプを読み込めませんでした。";
+    }
+  }
+
+  closeHelpDialog() {
+   this.helpdialog.close();
+  }
 
   initAiEngine() {
     this.aiEngine = this.loadAiEngine();
@@ -144,6 +164,8 @@ class BgGame {
     this.gameendokbtn  = byId("gameendokbtn");
     this.diceAsBtn     = document.querySelectorAll("#dice10,#dice11,#dice20,#dice21");
     this.pointTriangle = document.querySelectorAll(".point");
+    this.helpbtn       = byId("helpbtn");
+    this.helpclosebtn  = byId("helpclosebtn");
 
     //infos
     this.playerinfo    = [undefined, byId("playerinfo1"), byId("playerinfo2")];
@@ -171,6 +193,9 @@ class BgGame {
 
     //chequer
     this.chequerall    = document.querySelectorAll(".chequer");
+
+    //dialog
+    this.helpdialog    = byId("helpdialog");
   }
 
   //要素(またはNodeList)に、複数のイベントタイプのリスナーを登録する
@@ -208,11 +233,13 @@ class BgGame {
     this.addEvents(this.settingbtn,     clickEventType, (e) => { e.preventDefault(); this.showSettingPanelAction(); });
     this.addEvents(this.newgamebtn,     clickEventType, (e) => { e.preventDefault(); this.newGameAction(); });
     this.addEvents(this.cancelbtn,      clickEventType, (e) => { e.preventDefault(); this.cancelSettingPanelAction(); });
-    this.addEvents(this.forcedbtn,      clickEventType, (e) => { e.preventDefault(); this.forcedMoveAction(); }),
-    this.addEvents(this.dlkifubtn,      clickEventType, (e) => { e.preventDefault(); this.kifuobj.downloadKifuAction(); }),
+    this.addEvents(this.forcedbtn,      clickEventType, (e) => { e.preventDefault(); this.forcedMoveAction(); });
+    this.addEvents(this.dlkifubtn,      clickEventType, (e) => { e.preventDefault(); this.kifuobj.downloadKifuAction(); });
     this.addEvents(this.pointTriangle,  ['touchstart', 'mousedown'], (e) => { e.preventDefault(); this.pointTouchStartAction(e); });
     this.addEvents(window,              ['resize'],     (e) => { e.preventDefault(); this.redrawAction(); });
     this.addEvents(document,            ['contextmenu'],(e) => { e.preventDefault(); });
+    this.addEvents(this.helpbtn,        clickEventType, (e) => { e.preventDefault(); this.loadHelpDialog(); });
+    this.addEvents(this.helpclosebtn,   clickEventType, (e) => { e.preventDefault(); this.closeHelpDialog(); });
   }
 
   initGameOption() {
