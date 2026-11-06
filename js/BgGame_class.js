@@ -240,6 +240,7 @@ class BgGame {
     this.addEvents(document,            ['contextmenu'],(e) => { e.preventDefault(); });
     this.addEvents(this.helpbtn,        clickEventType, (e) => { e.preventDefault(); this.loadHelpDialog(); });
     this.addEvents(this.helpclosebtn,   clickEventType, (e) => { e.preventDefault(); this.closeHelpDialog(); });
+    this.addEvents(this.helpdialog,     ['cancel'],     (e) => { e.preventDefault(); }); //ESCで閉じない
   }
 
   initGameOption() {
